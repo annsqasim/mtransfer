@@ -1,0 +1,193 @@
+.sub-menu{
+  list-style: none;
+}
+
+.sub-menu li{
+  display: inline-block;
+}
+
+.sub-menu li a{
+  padding: 5px 10px;
+  transition: all 0.3s ease;
+  border-radius: 2px;
+  border: 1px solid #26bdef;
+}
+
+.sub-menu li.current-menu-item a{
+    background-color: #26bdef;
+    color: #fff !important;
+}
+
+.main_content select,
+.main_content textarea,
+.main_content input[type="text"],
+.main_content input[type="password"],
+.main_content input[type="datetime"],
+.main_content input[type="datetime-local"],
+.main_content input[type="date"],
+.main_content input[type="month"],
+.main_content input[type="time"],
+.main_content input[type="week"],
+.main_content input[type="number"],
+.main_content input[type="email"],
+.main_content input[type="url"],
+.main_content input[type="search"],
+.main_content input[type="tel"],
+.main_content input[type="color"],
+.main_content .uneditable-input{
+  width: 93%;
+  padding: 0.5rem 0.7rem;
+  margin-bottom: 0.5rem;
+}
+
+.main_content select{
+  width: 100%;
+  margin-bottom: 0.4rem;
+}
+
+#ui-datepicker-div{
+  display: none;
+}
+
+.tab-pane .row{
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+}
+.paid{
+  color: green;
+  font-weight: bold;
+}
+.pending{
+  color: #e0c924;
+  font-weight: bold;
+}
+.cancelled{
+  color: #d21616;
+  font-weight: bold;
+}
+.processed{
+  color: #269db1;
+  font-weight: bold;
+}
+.show-btn{
+  padding: 5px;
+  border-radius: 2px;
+}
+#remit-success, #remit-error{
+  display: none;
+}
+#ben-success, #ben-error{
+  display: none;
+}
+
+.show-btn{
+	cursor: pointer
+}
+
+.modal.fade.in{
+  z-index: 9999;
+}
+
+.transaction-box{
+  border: 1px solid #ccc;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+
+.transaction-box h6{
+  background-color: #26bdef;
+  color: #fff;
+  padding: 7px;
+}
+
+.transaction-box strong{
+  padding: 0px 7px;
+}
+
+.row-fluid{
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+}
+
+.radio-button{
+  margin-top: 0px !important;
+  margin-right: 5px !important;
+  margin-left: 10px !important;
+}
+
+.bank-account-option{
+  font-size: 20px;
+  padding: 1rem 0rem;
+}
+.bank-detail-section{
+  display: none;
+}
+
+.form-group{
+  height: 100px;
+}
+/* Small devices (landscape phones, 576px and up) */
+@media (max-width: 576px) {
+  .sub-menu li{
+    display: block;
+  }
+
+  .sub-menu li a{
+    display: block;
+    border:none;
+    border-bottom: 1px solid #26bdef;
+  }
+
+  .main_content select,
+  .main_content textarea,
+  .main_content input[type="text"],
+  .main_content input[type="password"],
+  .main_content input[type="datetime"],
+  .main_content input[type="datetime-local"],
+  .main_content input[type="date"],
+  .main_content input[type="month"],
+  .main_content input[type="time"],
+  .main_content input[type="week"],
+  .main_content input[type="number"],
+  .main_content input[type="email"],
+  .main_content input[type="url"],
+  .main_content input[type="search"],
+  .main_content input[type="tel"],
+  .main_content input[type="color"],
+  .main_content .uneditable-input{
+    width: 100%;
+  }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (max-width: 768px) {
+  .sub-menu li{
+    display: block;
+  }
+
+  .sub-menu li a{
+    display: block;
+    border:none;
+    border-bottom: 1px solid #26bdef;
+  }
+
+  .main_content select,
+  .main_content textarea,
+  .main_content input[type="text"],
+  .main_content input[type="password"],
+  .main_content input[type="datetime"],
+  .main_content input[type="datetime-local"],
+  .main_content input[type="date"],
+  .main_content input[type="month"],
+  .main_content input[type="time"],
+  .main_content input[type="week"],
+  .main_content input[type="number"],
+  .main_content input[type="email"],
+  .main_content input[type="url"],
+  .main_content input[type="search"],
+  .main_content input[type="tel"],
+  .main_content input[type="color"],
+  .main_content .uneditable-input{
+    width: 100%;
+  }
+}
