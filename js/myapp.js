@@ -10,56 +10,48 @@ jQuery( function() {
   jQuery('#beneficiary-table').DataTable();
 
 // when typing the amount
-  jQuery('#base_currency').on('change',function(){
-    var amount = jQuery('#amount').val();
-    var base_currency =  jQuery('#sending_currency').val();
+  // jQuery('#base_currency').on('change',function(){
+  //   var amount = jQuery('#amount').val();
+  //   var base_currency =  jQuery('#sending_currency').val();
+  //
+  //   jQuery('#total_amount').val(amount);
+  //
+  //   var send_data = {
+  //     'action': 'convertrates',
+  //     'amount': amount,
+  //     'base_currency': base_currency,
+  //   };
+  //   jQuery.post(ajaxURL, send_data, function(result) {
+  //     var res = JSON.parse(result);
+  //     jQuery('#converted_amount').val(res.amount);
+  //   });
+	// });
 
-    jQuery('#total_amount').val(amount);
-
-    var send_data = {
-      'action': 'convertrates',
-      'amount': amount,
-      'base_currency': base_currency,
-    };
-    jQuery.post(ajaxURL, send_data, function(result) {
-      var res = JSON.parse(result);
-      jQuery('#converted_amount').val(res.amount);
-    });
-	});
-
-  jQuery('#add_beneficiary').on('click',function(e){
+  jQuery('#check_amount').on('click',function(e){
     e.preventDefault();
+    var amount = jQuery('#amount').val().match(/^\d+$/) ? jQuery('#amount').val() : false;
     var data = {
-      'action':'addbeneficiary',
-      'user_id' : jQuery('#user_id').val(),
-      'firstname' : jQuery('#firstname').val(),
-      'lastname' : jQuery('#lastname').val(),
-      'nationality' : jQuery('#nationality').val(),
-      'dob' : jQuery('#datepicker').val(),
-      'nic' : jQuery('#nic').val(),
-      'relation' : jQuery('#relation').val(),
-      'contact' : jQuery('#contact').val(),
-      'email' : jQuery('#email').val(),
-      'acc_title' : jQuery('#acc_title').val(),
-      'acc_number' : jQuery('#acc_number').val(),
-      'iban' : jQuery('#iban').val(),
-      'bank' : jQuery('#bank').val(),
-      'bank_address' : jQuery('#bank_address').val(),
-      'branch_code' : jQuery('#branch_code').val(),
-      'address' : jQuery('#address').val(),
-      'city' : jQuery('#city').val(),
-      'state' : jQuery('#state').val(),
-      'postcode' : jQuery('#postcode').val(),
-      'country' : jQuery('#country').val(),
+      'action':'convertRates',
+      'amount' : jQuery('#amount').val(),
+      'currency' : jQuery('#sending_currency').val(),
     };
     jQuery.post(ajaxURL, data, function(resp) {
       console.log(resp);
-      if(resp == 0){
-        jQuery('#ben-success').fadeIn(300);
-      }else{
-        jQuery('#ben-error').fadeIn(300);
-      }
+      jQuery('#total_amount').val(amount);
+      jQuery('#rec_amount').val(resp);
     });
+  });
+
+  jQuery('#confirm_password').on('keyup',function(){
+    var password = jQuery('#password').val();
+    if(jQuery('#confirm_password').val() == password){
+      jQuery('#error').html('');
+      jQuery('#error').html('<span style="color:green">Password Matched</span>');
+    } else {
+      jQuery('#error').html('');
+      jQuery('#error').html('<span style="color:red">Password Doesnt Match</span>');
+    }
+
   });
 
   jQuery('a[id^="modal-"').on('click',function(){

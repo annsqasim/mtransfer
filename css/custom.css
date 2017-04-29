@@ -126,6 +126,11 @@
 .form-group{
   height: 100px;
 }
+
+small.error{
+  color: red;
+  padding: 5px 0px;
+}
 /* Small devices (landscape phones, 576px and up) */
 @media (max-width: 576px) {
   .sub-menu li{
