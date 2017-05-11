@@ -27,11 +27,11 @@ if($_POST['export_to_csv']){
   generate_csv();
 } elseif ($_POST['filter_by_date']) {
   //echo $date = $_POST['datetofilter'];
-  $transactions = $wpdb->get_results("SELECT t.id,t.amount,t.created_date,t.updated_date,t.status,t.user_id,t.converted_amount,t.applied_rates,u.display_name,b.firstname,b.lastname,c.code
+  $transactions = $wpdb->get_results("SELECT t.id,t.amount_recieve,t.created_date,t.updated_date,t.status,t.user_id,t.total_amount_paid,t.applied_rates,u.display_name,b.firstname,b.lastname,c.code
     FROM wp_mt_transaction t INNER JOIN wp_users u ON u.id = t.user_id INNER JOIN wp_mt_benificiary b ON b.id = t.beneficiary_id
     INNER JOIN wp_mt_currency c ON c.id = t.currency_id WHERE t.updated_date <= '".$date."'");
 } else {
-  $transactions = $wpdb->get_results("SELECT t.id,t.amount,t.created_date,t.updated_date,t.status,t.user_id,u.display_name,b.firstname,b.lastname,c.code
+  $transactions = $wpdb->get_results("SELECT t.id,t.amount_recieve,t.created_date,t.updated_date,t.status,t.user_id,t.total_amount_paid,t.exchange_rate,u.display_name,b.firstname,b.lastname,c.code
     FROM wp_mt_transaction t INNER JOIN wp_users u ON u.id = t.user_id INNER JOIN wp_mt_benificiary b ON b.id = t.beneficiary_id
     INNER JOIN wp_mt_currency c ON c.id = t.currency_id");
 }
@@ -70,9 +70,9 @@ if($_POST['export_to_csv']){
     <table class="wp-list-table widefat fixed striped pages">
     	<thead>
         <th>User</th>
-        <th>Amount Sent</th>
-        <th>Converted Amount</th>
-        <th>Applied Rates</th>
+        <th>Amount Recieved</th>
+        <th>Total Amount Paid</th>
+        <th>Exchange Rates</th>
         <th>Benificiary</th>
         <th>Transaction Date</th>
         <th>Updated Date</th>
@@ -87,9 +87,9 @@ if($_POST['export_to_csv']){
               $detailsUrl = admin_url('/admin.php?page=transaction-detail&id='.$value->id);
               echo "<tr>";
               echo "<td>".$value->display_name."</td>";
-              echo "<td>AUD ".number_format_i18n($value->amount,2)."</td>";
-              echo "<td>".$value->code." ".$value->converted_amount."</td>";
-              echo "<td>".$value->applied_rates."</td>";
+              echo "<td>".$value->code." ".number_format_i18n($value->amount_recieve,2)."</td>";
+              echo "<td>AUD ".number_format_i18n($value->total_amount_paid,2)."</td>";
+              echo "<td>".$value->exchange_rate."</td>";
               echo "<td>".$value->firstname." ".$value->lastname."</td>";
               echo "<td>".$value->created_date."</td>";
               echo "<td>".$value->updated_date."</td>";

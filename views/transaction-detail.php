@@ -7,10 +7,12 @@
 
   if ($_POST['edit']) {
     $data = array(
-      'amount' => $_POST['amount'],
+      'amount_send' => $_POST['amount_send'],
+      'amount_recieve' => $_POST['amount_recieve'],
       'currency_id' => $_POST['currency'],
       'status' => $_POST['status'],
-      'converted_amount' => $_POST['converted_amount'],
+      'comments' => $_POST['comments'],
+      'total_amount_paid' => $_POST['total_amount_paid'],
       'updated_date' => date('Y-m-d H:i:s'),
     );
     $where = array(
@@ -43,8 +45,7 @@
     echo "Cancel";
   }
 
-  $transactions = $wpdb->get_results("SELECT t.id,t.amount,t.created_date,t.updated_date,t.status,t.user_id,t.beneficiary_id,u.display_name,b.firstname,b.lastname,
-    c.code,t.converted_amount FROM wp_mt_transaction t INNER JOIN wp_users u ON u.id = t.user_id INNER JOIN wp_mt_benificiary b ON b.id = t.beneficiary_id
+  $transactions = $wpdb->get_results("SELECT * FROM wp_mt_transaction t INNER JOIN wp_users u ON u.id = t.user_id INNER JOIN wp_mt_benificiary b ON b.id = t.beneficiary_id
     INNER JOIN wp_mt_currency c ON c.id = t.currency_id where t.id =".$transaction_id);
 ?>
 <style media="screen">
@@ -61,8 +62,8 @@
       <tbody>
       <?php foreach($transactions as $transaction) : ?>
         <tr>
-          <th scope="row"><label for="transaction_id">Transaction ID</label></th>
-          <td><input name="transaction_id" id="transaction_id" value="<?php echo $transaction->id; ?>" class="regular-text" type="text" readonly></td>
+          <th scope="row"><label for="transaction_id">Transaction Reference</label></th>
+          <td><input name="transaction_id" id="transaction_id" value="<?php echo $transaction->ref; ?>" class="regular-text" type="text" readonly></td>
         </tr>
         <tr>
           <th scope="row"><label for="display_name">User Name</label></th>
@@ -86,9 +87,27 @@
           </td>
         </tr>
         <tr>
-          <th scope="row"><label for="amount">Amount</label></th>
+          <th scope="row"><label for="amount">Amount Send</label></th>
           <td>
-            <input name="amount" id="amount" value="<?php echo $transaction->amount; ?>" class="regular-text" type="text">
+            <input name="amount_send" id="amount" value="<?php echo $transaction->amount_send; ?>" class="regular-text" type="text">
+            <select name="paid_currency" id="currency">
+            <?php
+              $currencies = $wpdb->get_results("SELECT id, name, code FROM ".$wpdb->prefix."mt_currency");
+              foreach ($currencies as $key => $value) {
+                $sel = '';
+                if($value->code == 'AUD'){
+                  $sel = 'selected="selected"';
+                }
+                echo '<option '.$sel.' value="'.$value->id.'">'.$value->name.'</option>';
+              }
+            ?>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row"><label for="amount">Amount Recieve</label></th>
+          <td>
+            <input name="amount_recieve" id="amount" value="<?php echo $transaction->amount_recieve; ?>" class="regular-text" type="text">
             <select name="currency" id="currency">
             <?php
               $currencies = $wpdb->get_results("SELECT id, name, code FROM ".$wpdb->prefix."mt_currency");
@@ -101,7 +120,30 @@
               }
             ?>
             </select>
-            <input name="converted_amount" id="converted_amount" value="<?php echo $transaction->converted_amount; ?>" class="regular-text" type="text">
+          </td>
+        </tr>
+        <tr>
+          <th scope="row"><label for="amount">Total Amount Paid</label></th>
+          <td>
+            <input name="total_amount_paid" id="amount" value="<?php echo $transaction->total_amount_paid; ?>" class="regular-text" type="text">
+            <select name="paid_currency" id="currency">
+            <?php
+              $currencies = $wpdb->get_results("SELECT id, name, code FROM ".$wpdb->prefix."mt_currency");
+              foreach ($currencies as $key => $value) {
+                $sel = '';
+                if($value->code == 'AUD'){
+                  $sel = 'selected="selected"';
+                }
+                echo '<option '.$sel.' value="'.$value->id.'">'.$value->name.'</option>';
+              }
+            ?>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row"><label for="amount">Comments</label></th>
+          <td>
+            <textarea name="comments" class="regular-text"><?php echo $transaction->comments; ?></textarea>
           </td>
         </tr>
         <tr>
@@ -126,7 +168,7 @@
                 <input name="status" id="status" value="pr" <?php echo $paid; ?> type="radio">Processed
               </label>
               <label for="users_can_register">
-                <input name="status" id="status" value="pending" <?php echo $unpaid; ?> type="radio">Pending
+                <input name="status" id="status" value="pen" <?php echo $unpaid; ?> type="radio">Pending
               </label>
           </fieldset></td>
         </tr>
